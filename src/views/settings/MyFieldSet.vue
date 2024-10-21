@@ -4,7 +4,7 @@
         <div class="card card-default rounded-0 shadow">
           <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
-              <h3 class="card-title">Components</h3>
+              <h3 class="card-title">FieldSet</h3>
               <button
                 type="button"
                 class="btn btn-primary"
@@ -27,7 +27,7 @@
                 <button class="btn btn-outline-success" type="submit">Search</button>
               </form>
             </div>
-            <div class="div_components">
+            <div class="div_desktop">
               <table class="table table-bordered table-striped">
                 <thead>
                   <tr>
@@ -39,8 +39,17 @@
                     <th>Actions</th>
                   </tr>
                 </thead>
-                <tbody id="componentsAssetsTable">
-
+                <tbody>
+                    <tr v-for="(asset, index) in submittedAssets" :key="index">
+                        <td>{{ index + 1 }}</td>
+                        <td>{{ asset.categoryName }}</td>
+                        <td>{{ asset.assetName }}</td>
+                        <td>{{ asset.specifications.bname }}</td> <!-- Add a proper image source -->
+                        <td>{{ asset.specifications.specs }}</td> <!-- Replace with actual Asset Tag -->
+                        <td>
+                        <button class="btn btn-danger">Delete</button> <!-- Add delete functionality if needed -->
+                        </td>
+                    </tr>
                 </tbody>
 
               </table>
@@ -86,7 +95,7 @@
                   <div class="row mb-2">
                     <div class="col-md-6">
                       <label for="category" class="col-form-label">Category:</label>
-                      <select v-model="assetType" @change="resetSpecifications" class="form-select">
+                      <select v-model="categoryName" @change="resetSpecifications" class="form-select">
                         <option value="">Select category</option>
                         <option value="Accessories">Accessories</option>
                         <option value="Components">Components</option>
@@ -97,11 +106,11 @@
                       <label for="asset-name" class="col-form-label">Asset Name:</label>
                       <select v-model="assetName" @change="resetSpecifications" class="form-select">
                         <option value="">Select category</option>
-                        <option value="Processor">Processor</option>
+                        <option value="CPU">Processor</option>
                         <option value="RAM">RAM</option>
-                        <option value="Graphics Card">Graphics Card</option>
-                        <option value="Mother Board">Mother Board</option>
-                        <option value="Storage">Storage</option>
+                        <option value="GPU">Graphics Card</option>
+                        <option value="MOTHERBOARD">Mother Board</option>
+                        <option value="STORAGE">Storage</option>
                       </select>
                     </div>
                   </div>
@@ -140,52 +149,47 @@
   </template>
   
   <script>
-  function fetchAssets() {
-            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDc0LCJ1c2VybmFtZSI6Imp1c3dhIiwiaWF0IjoxNzI5MTI4MzA3LCJleHAiOjE3Mjk3MzMxMDd9.9ezL-Rmp9IMLXtb_7n29YTxQeGvm7B1CFKGaxqFEhJY';
-    
-            fetch('http://192.168.100.216:3000/assets/search/component', {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`, // Add Bearer token to headers
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok ' + response.statusText);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    const componentsAssetsTable = document.getElementById('componentsAssetsTable');
-                    componentsAssetsTable.innerHTML = ''; // Clear previous data
-    
-                    // Loop through the data and create table rows
-                    data.forEach(asset => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${asset.asset_id}</td>
-                            <td>${asset.asset_type}</td>
-                            <td>${asset.asset_name}</td>
-                            <td>${asset.asset_brand}</td>
-                            <td>${asset.asset_specification}</td>
-                            <td>${new Date(asset.purchase_date).toLocaleDateString()}</td>
-                            <td>${asset.created_by}</td>
-                            <td>${asset.updated_by}</td>
-                            <td>${new Date(asset.date_added).toLocaleDateString()}</td>
-                            <td>${asset.company_id}</td>
-                        `;
-                        componentsAssetsTable.appendChild(row);
+  export default {
+    data() {
+  return {
+    categoryName: '',
+    assetName: '',
+    specifications: {
+      bname: '',
+      specs: '',
+    },
+    submittedAssets: [], // New array to hold submitted assets
+  };
+},
+    methods: {
+      resetSpecifications() {
+        this.specifications = {
+          bname: '',
+          specs: '',
+        };
+      },
+      submitSpecifications() {
+  const asset = {
+    categoryName: this.categoryName,
+    assetName: this.assetName,
+    specifications: { ...this.specifications }, // Spread the specifications
+  };
+  
+  // Add the asset to the submitted assets array
+  this.submittedAssets.push(asset);
 
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching assets:', error);
-                });
-        }
-    
-        // Fetch assets when the page loads
-        window.onload = fetchAssets;
+  // Handle the submission here, e.g., send data to a server
+  console.log(asset);
+  alert('Specifications submitted!');
+
+  // Reset the form fields
+  this.resetSpecifications();
+  this.categoryName = '';
+  this.assetName = '';
+},
+
+    },
+  };
   </script>
   
   <style>

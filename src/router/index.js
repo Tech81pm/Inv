@@ -24,6 +24,22 @@ const router = createRouter ({
             path: '/consumables',
             component: () => import('../views/MyConsumables.vue')
         },
+        {
+            path: '/company',
+            component: () => import('../views/settings/MyCompany.vue')
+        },
+        {
+            path: '/categories',
+            component: () => import('../views/settings/MyCategories.vue')
+        },
+        {
+            path: '/fieldset',
+            component: () => import('../views/settings/MyFieldSet.vue')
+        },
+        {
+            path: '/assetModel',
+            component: () => import('../views/settings/MyAssetModel.vue')
+        },
 
     ]
 })
