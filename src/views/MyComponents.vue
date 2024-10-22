@@ -42,6 +42,9 @@
               <tbody id="componentsAssetsTable">
               </tbody>
             </table>
+            <div>
+
+              </div>
           </div>
           <div class="d-flex justify-content-between align-items-center mt-3">
             <div>
@@ -99,7 +102,7 @@ export default {
   },
   methods: {
     fetchAssets() {
-      const token = 'your-token-here';
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDc0LCJ1c2VybmFtZSI6Imp1c3dhIiwiaWF0IjoxNzI5MTI4MzA3LCJleHAiOjE3Mjk3MzMxMDd9.9ezL-Rmp9IMLXtb_7n29YTxQeGvm7B1CFKGaxqFEhJY';
       
       fetch('http://192.168.100.216:3000/assets/search/component', {
         method: 'GET',
