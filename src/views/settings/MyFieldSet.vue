@@ -27,29 +27,20 @@
                 <button class="btn btn-outline-success" type="submit">Search</button>
               </form>
             </div>
-            <div class="div_desktop">
+            <div class="div_FieldSet">
               <table class="table table-bordered table-striped">
                 <thead>
                   <tr>
                     <th>Id</th>
+                    <th>Item Code</th>
                     <th>Category Name</th>
                     <th>Asset Name</th>
-                    <th>Brand Name</th>
-                    <th>Specifications</th>
+                    <th>Status</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(asset, index) in submittedAssets" :key="index">
-                        <td>{{ index + 1 }}</td>
-                        <td>{{ asset.categoryName }}</td>
-                        <td>{{ asset.assetName }}</td>
-                        <td>{{ asset.specifications.bname }}</td> <!-- Add a proper image source -->
-                        <td>{{ asset.specifications.specs }}</td> <!-- Replace with actual Asset Tag -->
-                        <td>
-                        <button class="btn btn-danger">Delete</button> <!-- Add delete functionality if needed -->
-                        </td>
-                    </tr>
+
                 </tbody>
 
               </table>
@@ -81,118 +72,36 @@
           </div>
         </div>
       </div>
-  
-      <div>
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Create</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <form @submit.prevent="submitSpecifications">
-                  <div class="row mb-2">
-                    <div class="col-md-6">
-                      <label for="category" class="col-form-label">Category:</label>
-                      <select v-model="categoryName" @change="resetSpecifications" class="form-select">
-                        <option value="">Select category</option>
-                        <option value="Accessories">Accessories</option>
-                        <option value="Components">Components</option>
-                        <option value="Consumables">Consumables</option>
-                      </select>
-                    </div>
-                    <div class="col-md-6">
-                      <label for="asset-name" class="col-form-label">Asset Name:</label>
-                      <select v-model="assetName" @change="resetSpecifications" class="form-select">
-                        <option value="">Select category</option>
-                        <option value="CPU">Processor</option>
-                        <option value="RAM">RAM</option>
-                        <option value="GPU">Graphics Card</option>
-                        <option value="MOTHERBOARD">Mother Board</option>
-                        <option value="STORAGE">Storage</option>
-                      </select>
-                    </div>
-                  </div>
-  
-                  <div v-if="categoryName === 'Components'" class="row mb-2">
-                    <div class="col-md-6">
-                      <label for="bname" class="col-form-label">Brand Name:</label>
-                      <input
-                        type="text"
-                        id="bname"
-                        v-model="specifications.bname"
-                        placeholder="Enter Brand Name"
-                        class="form-control"
-                      />
-                    </div>
-                    <div class="col-md-6">
-                      <label for="specs" class="col-form-label">Specs:</label>
-                      <input
-                        type="text"
-                        id="specs"
-                        v-model="specifications.specs"
-                        placeholder="Enter Specification"
-                        class="form-control"
-                      />
-                    </div>
-                  </div>
-  
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <FieldSetModal/>
     </div>
   </template>
   
-  <script>
-  export default {
-    data() {
-  return {
-    categoryName: '',
-    assetName: '',
-    specifications: {
-      bname: '',
-      specs: '',
-    },
-    submittedAssets: [], // New array to hold submitted assets
-  };
-},
-    methods: {
-      resetSpecifications() {
-        this.specifications = {
-          bname: '',
-          specs: '',
-        };
-      },
-      submitSpecifications() {
-  const asset = {
-    categoryName: this.categoryName,
-    assetName: this.assetName,
-    specifications: { ...this.specifications }, // Spread the specifications
-  };
-  
-  // Add the asset to the submitted assets array
-  this.submittedAssets.push(asset);
+  <script setup>
+  import FieldSetModal from '@/components/ui/modal/FieldSetModal.vue'; 
 
-  // Handle the submission here, e.g., send data to a server
-  console.log(asset);
-  alert('Specifications submitted!');
-
-  // Reset the form fields
-  this.resetSpecifications();
-  this.categoryName = '';
-  this.assetName = '';
-},
-
-    },
-  };
   </script>
-  
+
+
   <style>
-  /* Add your styles here */
+  .modal-body {
+    padding: 2rem; 
+  }
+  
+  .input-group {
+    margin-bottom: 1rem; 
+  }
+  
+  .input-group-text {
+    min-width: 150px; 
+  }
+  
+  .btn-outline-secondary {
+    margin-left: 0.5rem; 
+  }
+  
+  .btn-primary {
+    margin-top: 1rem; 
+  }
   </style>
+  
   

@@ -162,6 +162,7 @@
     
                     // Loop through the data and create table rows
                     data.forEach(asset => {
+
                         const row = document.createElement('tr');
                         row.innerHTML = `
                             <td>${asset.asset_id}</td>
@@ -169,11 +170,6 @@
                             <td>${asset.asset_name}</td>
                             <td>${asset.asset_brand}</td>
                             <td>${asset.asset_specification}</td>
-                            <td>${new Date(asset.purchase_date).toLocaleDateString()}</td>
-                            <td>${asset.created_by}</td>
-                            <td>${asset.updated_by}</td>
-                            <td>${new Date(asset.date_added).toLocaleDateString()}</td>
-                            <td>${asset.company_id}</td>
                         `;
                         componentsAssetsTable.appendChild(row);
 
