@@ -1,88 +1,112 @@
 <template>
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="card card-default rounded-0 shadow">
-          <div class="card-header">
-            <div class="d-flex justify-content-between align-items-center">
-              <h3 class="card-title">All Assets</h3>
-              <button
-                type="button"
-                class="btn btn-primary bg-gradient rounded-0 btn-sm"
-                data-bs-toggle="modal"
-                data-bs-target="#addModal"
-              >
-                Create New
-              </button>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="d-flex justify-content-end mb-2">
-              <form class="d-flex" role="search">
-                <input
-                  class="form-control me-2"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-                <button class="btn btn-outline-success" type="submit">Search</button>
-              </form>
-            </div>
-            <div class="div_desktop">
-              <table class="table table-bordered table-striped">
-                <thead>
-                  <tr>
-                    <th>Id</th>
-                    <th>Asset Name</th>
-                    <th>Image</th>
-                    <th>Asset Tag</th>
-                    <th>Asset Model</th>
-                    <th>Category</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  
-                </tbody>
-              </table>
-            </div>
-            <div class="d-flex justify-content-between align-items-center mt-3">
-              <div>
-                <nav aria-label="Page navigation">
-                  <ul class="pagination">
-                    <li class="page-item">
-                      <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                      </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                      <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-              <div>
-                <small class="text-muted">Showing 1-10 of 50 items</small>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <div class="container mt-5">
+    <h2>Assets List</h2>
+    <table class="table table-bordered" id="assetsTable">
+      <thead>
+        <tr>
+          <th>Asset ID</th>
+          <th>Asset Name</th>
+          <th>Asset Brand</th>
+          <th>Asset Specification</th>
+          <th>Purchase Date</th>
+          <th>Created By</th>
+          <th>Updated By</th>
+          <th>Date Added</th>
+          <th>Company ID</th>
+        </tr>
+      </thead>
+      <tbody id="assetsTableBody">
+        <!-- Data will be inserted here -->
+      </tbody>
+    </table>
+    <div class="button-container">
+      <button class="btn btn-primary" @click="prevPage" :disabled="page === 1">Prev</button>
+      <button class="btn btn-primary" @click="nextPage" :disabled="disableNext">Next</button>
     </div>
-  </template>
-  
-  <script>
-  export default {};
-  </script>
-  
-  <style scoped>
-  .table th,
-  .table td {
-    text-align: center;
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      page: 1,
+      disableNext: false,
+      limit: 10
+    };
+  },
+  mounted() {
+    this.fetchAssets();
+  },
+  methods: {
+    fetchAssets() {
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDc0LCJ1c2VybmFtZSI6Imp1c3dhIiwiaWF0IjoxNzI5MTI4MzA3LCJleHAiOjE3Mjk3MzMxMDd9.9ezL-Rmp9IMLXtb_7n29YTxQeGvm7B1CFKGaxqFEhJY';
+
+      fetch(`http://192.168.100.216:3000/assets/fetch?page=${this.page}&limit=${this.limit}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`, // Add Bearer token to headers
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+          }
+          return response.json();
+        })
+        .then(data => {
+          const assetsTableBody = document.getElementById('assetsTableBody');
+          assetsTableBody.innerHTML = ''; // Clear previous data
+
+          // Check if there is a next page to disable the Next button
+          this.disableNext = data.data.length < this.limit;
+
+          // Loop through the data and create table rows
+          data.data.forEach(asset => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${asset.asset_id}</td>
+              <td>${asset.asset_name}</td>
+              <td>${asset.asset_brand}</td>
+              <td>${asset.asset_specification}</td>
+              <td>${new Date(asset.purchase_date).toLocaleDateString()}</td>
+              <td>${asset.created_by}</td>
+              <td>${asset.updated_by}</td>
+              <td>${new Date(asset.date_added).toLocaleDateString()}</td>
+              <td>${asset.company_id}</td>
+            `;
+            assetsTableBody.appendChild(row);
+          });
+        })
+        .catch(error => {
+          console.error('Error fetching assets:', error);
+        });
+    },
+    nextPage() {
+      if (!this.disableNext) {
+        this.page++;
+        this.fetchAssets();
+      }
+    },
+    prevPage() {
+      if (this.page > 1) {
+        this.page--;
+        this.fetchAssets();
+      }
+    }
   }
-  </style>
-  
+};
+</script>
+
+<style>
+.button-container {
+  display: flex;
+  justify-content: right;
+}
+
+.btn {
+  font-size: 1rem;
+  margin-right: 10px;
+}
+</style>
