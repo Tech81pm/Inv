@@ -125,7 +125,7 @@
               {{ new Date(newAsset[key]).toLocaleDateString() }}
             </p>
           </div>
-          <button type="submit" class="btn btn-primary">Add Asset</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
     </div>
@@ -212,9 +212,10 @@ export default {
         const data = await response.json();
         console.log('Asset added:', data);
 
-        // Show confirmation modal and refresh assets list
+       
         this.confirmationData = data;
         this.fetchAssets();
+        this.closeModal();
         this.showConfirmationModal = true;
       } catch (error) {
         console.error('Error adding asset:', error);
