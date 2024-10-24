@@ -17,7 +17,7 @@
         </router-link>
         <router-link class="button" to="/accessories">
           <span class="material-icons">category</span>
-          <span class="text">Accessories</span>
+          <span class="text">Sets</span>
         </router-link>
         <router-link class="button" to="/components">
           <span class="material-icons">category</span>
