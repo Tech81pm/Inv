@@ -2,6 +2,7 @@
     <div class="col">
         <div class="card-body">
           <div class="div_components">
+            <h2>Components List</h2>
             <table class="table table-bordered table-striped">
               <thead>
                 <tr>
@@ -93,10 +94,9 @@ export default {
           const componentsAssetsTable = document.getElementById('componentsAssetsTable');
           componentsAssetsTable.innerHTML = '';
 
-          // Assuming data contains an object with the actual assets and total count
-          this.total = data.total; // Set the total number of assets
+        
+          this.total = data.total; 
 
-          // Check if next button should be disabled
           this.disableNext = data.length < this.limit;
 
           data.forEach(asset => {

@@ -164,7 +164,7 @@ export default {
   },
   methods: {
     fetchAssets() {
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDc0LCJ1c2VybmFtZSI6Imp1c3dhIiwiaWF0IjoxNzI5MTI4MzA3LCJleHAiOjE3Mjk3MzMxMDd9.9ezL-Rmp9IMLXtb_7n29YTxQeGvm7B1CFKGaxqFEhJY'; // Replace with your JWT token
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDczLCJ1c2VybmFtZSI6Ik9zaHdhIiwiaWF0IjoxNzI5NzQwNTY4LCJleHAiOjE3Mjk3NjU3Njh9.vuNZ8fK-JHEjIwhkCbcdwv_4qg8oD6ZtiTnwQuEs-ec'; // Replace with your JWT token
 
       fetch(`http://192.168.100.216:3000/assets/fetch?page=${this.page}&limit=${this.limit}`, {
         method: 'GET',
@@ -179,7 +179,7 @@ export default {
         }
         return response.json();
       })
-      .then(data => {
+      .then(data => {1
         this.assets = data.data;
         this.disableNext = data.data.length < this.limit;
       })
@@ -188,7 +188,7 @@ export default {
       });
     },
     async addAsset() {
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDc0LCJ1c2VybmFtZSI6Imp1c3dhIiwiaWF0IjoxNzI5MTI4MzA3LCJleHAiOjE3Mjk3MzMxMDd9.9ezL-Rmp9IMLXtb_7n29YTxQeGvm7B1CFKGaxqFEhJY'; // Replace with your JWT token
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDczLCJ1c2VybmFtZSI6Ik9zaHdhIiwiaWF0IjoxNzI5NzQwNTY4LCJleHAiOjE3Mjk3NjU3Njh9.vuNZ8fK-JHEjIwhkCbcdwv_4qg8oD6ZtiTnwQuEs-ec'; // Replace with your JWT token
       const assetToAdd = { ...this.newAsset };
 
       console.log('Asset to add:', assetToAdd); // Debug log
