@@ -42,7 +42,7 @@
   <!-- End Modal -->
   
   <!-- Main Table -->
-  <div>
+  <div class="container">
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -62,16 +62,25 @@
           <td>
             <div class="button-container">
               <!-- Trigger Modal Button -->
-              <button type="button" class="btn btn-primary" @click="viewSet(set.set_id)" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                View
+              <button type="button" class="btn btn-success" @click="viewSet(set.set_id)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                View parts
               </button>
-              <button class="btn btn-primary" @click="editSet(set.set_id)">Edit</button>
+              <button class="btn btn-primary" @click="editSet(set.set_id)">Assign set</button>
               <button class="btn btn-danger" @click="removeSet(set.set_id)">Remove</button>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
+
+    <!-- Pagination Controls -->
+  <div class="button-container">
+    <div class="pagination-controls">
+      <button class="btn btn-primary" @click="prevPage" :disabled="page === 1">Previous</button>
+      <span>Page {{ page }}</span>
+      <button class="btn btn-primary" @click="nextPage" :disabled="sets.length < limit">Next</button>
+    </div>
+  </div>
   </div>
 </template>
 
@@ -134,6 +143,16 @@ export default {
         console.error('Error fetching components:', error);
       });
     },
+    nextPage() {
+      this.page++;
+      this.fetchSet();
+    },
+    prevPage() {
+      if (this.page > 1) {
+        this.page--;
+        this.fetchSet();
+      }
+    },
     editSet(setId) {
       console.log('Editing set:', setId);
     },
@@ -151,8 +170,22 @@ export default {
 </script>
 
 <style>
-  .button-container {  
+.button-container {  
   display: flex;
-  justify-content: space-evenly;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.btn{
+  font-size: small;
+}
+.table{
+  font-size: medium;
 }
 </style>
