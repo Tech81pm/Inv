@@ -90,16 +90,16 @@ export default {
     return {
       page: 1,
       limit: 8,
-      sets: [], // Array to store fetched sets
-      components: [] // Array to store fetched components for a set
+      sets: [], 
+      components: [] 
     };
   },
   mounted() {
-    this.fetchSet(); // Call fetchSet when component mounts
+    this.fetchSet(); 
   },
   methods: {
     fetchSet() {
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDczLCJ1c2VybmFtZSI6Ik9zaHdhIiwiaWF0IjoxNzI5NzQwNTY4LCJleHAiOjE3Mjk3NjU3Njh9.vuNZ8fK-JHEjIwhkCbcdwv_4qg8oD6ZtiTnwQuEs-ec';
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDczLCJ1c2VybmFtZSI6Ik9zaHdhIiwiaWF0IjoxNzI5ODE1NjEyLCJleHAiOjE3MzA0MjA0MTJ9.OTBUvoiUaEEomDP6sco1FtD88tywVXeqRtqpIDy6iD8';
 
       fetch(`http://192.168.100.216:3000/sets/fetch?page=${this.page}&limit=${this.limit}`, {
         method: 'GET',
@@ -115,14 +115,14 @@ export default {
         return response.json();
       })
       .then(data => {
-        this.sets = data.data; // Store fetched data in the sets array
+        this.sets = data.data; 
       })
       .catch(error => {
         console.error('Error fetching data:', error);
       });
     },
     viewSet(setId) {
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDczLCJ1c2VybmFtZSI6Ik9zaHdhIiwiaWF0IjoxNzI5NzQwNTY4LCJleHAiOjE3Mjk3NjU3Njh9.vuNZ8fK-JHEjIwhkCbcdwv_4qg8oD6ZtiTnwQuEs-ec';
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDczLCJ1c2VybmFtZSI6Ik9zaHdhIiwiaWF0IjoxNzI5ODE1NjEyLCJleHAiOjE3MzA0MjA0MTJ9.OTBUvoiUaEEomDP6sco1FtD88tywVXeqRtqpIDy6iD8';
       fetch(`http://192.168.100.216:3000/components/fetch/${setId}`, {
         method: 'GET',
         headers: {
