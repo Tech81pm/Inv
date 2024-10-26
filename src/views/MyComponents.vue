@@ -170,6 +170,9 @@
                             <td>${asset.asset_name}</td>
                             <td>${asset.asset_brand}</td>
                             <td>${asset.asset_specification}</td>
+                            <td>
+                                <button>Edit</button>
+                            </td>
                         `;
                         componentsAssetsTable.appendChild(row);
 
