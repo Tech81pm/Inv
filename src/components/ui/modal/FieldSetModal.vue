@@ -288,5 +288,6 @@ export default {
 </script>
 
 <style scoped>
-/* Add modal-specific styles if needed */
+
+
 </style>

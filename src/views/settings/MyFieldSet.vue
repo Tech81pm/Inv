@@ -77,10 +77,10 @@
   </template>
   
   <script setup>
-  import FieldSetModal from '@/components/ui/modal/FieldSetModal.vue'; 
+  import FieldSetModal from '@/components/ui/modal/FieldSetModal.vue';
+   
 
   </script>
-
 
   <style>
   .modal-body {
