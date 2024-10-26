@@ -2,29 +2,29 @@
     <aside :class="{ 'is-expanded': is_expanded }">
       <div class="menu-toggle-wrap">
         <button class="menu-toggle" @click="ToggleMenu">
-          <span class="material-icons">menu</span>
+          <span class="material-icons">chevron_right</span>
         </button>
       </div>
   
       <div class="menu">
         <router-link class="button" to="/">
-          <span class="material-icons">home</span>
-          <span class="text">Home</span>
+          <span class="material-icons">dashboard</span>
+          <span class="text">Dashboard</span>
         </router-link>
         <router-link class="button" to="/assets">
-          <span class="material-icons">density_small</span>
+          <span class="material-icons">inventory_2</span>
           <span class="text">Assets</span>
         </router-link>
         <router-link class="button" to="/accessories">
-          <span class="material-icons">category</span>
-          <span class="text">Accessories</span>
+          <span class="material-icons">view_list</span>
+          <span class="text">Sets</span>
         </router-link>
         <router-link class="button" to="/components">
-          <span class="material-icons">category</span>
+          <span class="material-icons">extension</span>
           <span class="text">Components</span>
         </router-link>
         <router-link class="button" to="/consumables">
-          <span class="material-icons">category</span>
+          <span class="material-icons">vaccines</span>
           <span class="text">Consumables</span>
         </router-link>
         <div class="button" @click="toggleSettings">

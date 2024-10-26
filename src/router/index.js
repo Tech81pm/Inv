@@ -14,7 +14,7 @@ const router = createRouter ({
         },
         {
             path: '/accessories',
-            component: () => import('../views/MyAccessories.vue')
+            component: () => import('../views/MySets.vue')
         },
         {
             path: '/components',
